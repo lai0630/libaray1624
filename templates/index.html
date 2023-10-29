@@ -1,20 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <title>
-        圖書館
-    </title>
-</head>
-<body>
-    <h1>歡迎光臨圖書館</h1>
-    <hr><!--水平線-->
-    {% for post in posts %}<!--透過for迴圈把資料集中的項目一個一個取出使用-->
-    <p style='font-family:微軟正黑體;font-size:14pt;font-weight:bold;'>
-        <a href='/post/{{post.slug}}'>{{ post.title }}</a><!--資料庫中所設置資料的標題 點進去後才有內容-->
-    </p> 
-    {% endfor %}
-    <hr>
-    <h3>現在時刻：{{ now }}</h3>
-</body>
-</html>
+<!-- index.html --> 
+{% extends 'base.html' %}<!--繼承base 拿它來改寫-->
+{% block title %} 歡迎光臨我的部落格 {% endblock %}
+{% block headmessage %} 
+    <h3 style='font-family:標楷體;'>本站書籍列表</a>
+{% endblock %}
+{% block content %} 
+{% for post in posts %}<!--透過for迴圈把資料集中的項目一個一個取出使用--> <!--資料庫中所設置資料的標題 點進去後才有內容-->
+<div class='card'>
+    <div class='card-header'>
+        <p style='font-family:微軟正黑體;font-size:14pt;font-weight:bold;'>
+            <a href='/post/{{post.slug}}'>{{ post.title }}</a>
+        </p>
+    </div>
+    <div class='card-body' style='background-color:#ffffdd'>
+        <p>
+            {{ post.body | truncatechars:40 }}
+        </p>
+    </div>
+    <div class='card-footer'  style='background-color:#efefef'>
+        <p>
+            發佈時間：{{ post.pub_date | date:"Y M d, h:m:s A"}}
+        </p>
+    </div>
+</div>
+<br><!--一個card放一行-->
+
+{% endfor %}
+{% endblock %}
